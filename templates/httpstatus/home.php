@@ -34,12 +34,12 @@
     <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
             <div class="w3-container w3-white w3-center">
             <i onclick="document.getElementById('connexion').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
-            <h2 class="w3-wide">Connexion</h2>
-            <p>Entrez vos identifiants :</p>
+            <h2 class="w3-wide">Ajouter un site</h2>
+            <p>Entrez les différentes informations</p>
             <form action="connexion_script.php" method="POST" >
-               <p><input class="w3-input w3-border" type="text" placeholder="Pseudo" name="Pseudo" required></p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Mot de passe" name="Password" required></p>
-                <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom">Se connecter</button>
+               <p><input class="w3-input w3-border" type="text" placeholder="Nom" name="Name" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="URL" name="URL" required></p>
+                <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom">Ajouter le site</button>
             </form>
         </div>
     </div>
