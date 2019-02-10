@@ -1,11 +1,9 @@
 <?php
     $routes = array(
-		'Index' => [
+		'httpstatus' => [
 			'home' => '/',
-			'show_value' => [
-				'/show-value/{first_value}/',
-				'/show-value/{first_value}/{second_value}/',
-			],
+			'login' => '/login/',
+			'logout' => '/logout/',
         ],
     );
 
