@@ -78,9 +78,9 @@
             <i onclick="document.getElementById('connexion').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
             <h2 class="w3-wide">Ajouter un site</h2>
             <p>Entrez les différentes informations</p>
-            <form action="connexion_script.php" method="POST" >
-               <p><input class="w3-input w3-border" type="text" placeholder="Nom" name="Name" required></p>
-                <p><input class="w3-input w3-border" type="text" placeholder="URL" name="URL" required></p>
+            <form action="<?= Router::url('httpstatus', 'add_url'); ?>" method="POST" >
+               <p><input class="w3-input w3-border" type="text" placeholder="Nom" name="name" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="URL" name="url" required></p>
                 <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom">Ajouter le site</button>
             </form>
         </div>

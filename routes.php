@@ -4,6 +4,7 @@
 			'home' => '/',
 			'login' => '/login/',
 			'logout' => '/logout/',
+			'add_url' => '/add_url/',
         ],
     );
 

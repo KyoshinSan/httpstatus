@@ -2,6 +2,7 @@
 namespace controllers\publics;
 
 use \controllers\internals\user as InternalUser;
+use \controllers\internals\url as InternalUrl;
 
 class httpstatus extends \Controller
 {
@@ -10,6 +11,7 @@ class httpstatus extends \Controller
     {
         parent::__construct($pdo);
         $this->internal_user = new InternalUser($pdo);
+        $this->internal_url = new InternalUrl($pdo);
     }
     /** 
      * Home Page
@@ -48,6 +50,24 @@ class httpstatus extends \Controller
         session_destroy();
         header('Location: ' . HTTP_PWD);
         return true;
+    }
+
+    public function add_url ()
+    {
+        $url = $_POST['url'] ?? false;
+        $name = $_POST['name'] ?? false;
+
+        if (!$url || !$name || !filter_var($url, FILTER_VALIDATE_URL))
+        {
+            header('Location: ' . HTTP_PWD);
+            return false;
+        }
+
+        $this->internal_url->add_url($url,$name);
+        header('Location: ' . HTTP_PWD);
+        return true;
+
+        
     }
 
 
