@@ -13,8 +13,8 @@ class url extends \InternalController
 
     public function add_url (string $url, string $name)
     {   
-        $url = $this->model_url->get_one_by_url($url);
-        if(!$url)
+        $url_exist = $this->model_url->get_one_by_url($url);
+        if(!$url_exist)
         {
             $this->model_url->create($url, $name);
         }

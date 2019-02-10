@@ -6,12 +6,12 @@ class url extends \Model
 {
     public function get_one_by_url (string $url)
     {   
-        return $this->get_one('url', ['url' => $url]);
+        return $this->get_one('urls', ['url' => $url]);
     }   
     
    	public function create (string $url, string $name)
     {
-        return $this->insert('url', [
+        return $this->insert('urls', [
             'url' => $url,
             'name' => $name,
         ]);
@@ -20,7 +20,7 @@ class url extends \Model
     public function modify (int $id, string $url, string $name)
     {
         return $this->update(
-            'url',
+            'urls',
             [
                 'url' => $url,
                 'name' => $name,
@@ -33,7 +33,7 @@ class url extends \Model
 
     public function remove (int $id)
     {
-        return $this->delete('url', ['id' => $id]);
+        return $this->delete('urls', ['id' => $id]);
     }
 
 

@@ -63,7 +63,7 @@ class httpstatus extends \Controller
             return false;
         }
 
-        $this->internal_url->add_url($url,$name);
+        $this->internal_url->add_url($url, $name);
         header('Location: ' . HTTP_PWD);
         return true;
 
