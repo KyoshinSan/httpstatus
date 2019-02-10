@@ -31,7 +31,7 @@ INSERT INTO user
   api_key
 ) VALUES (
   'deschaussettes@yopmail.com',
-  'password',
+  '$2y$10$It/4IYf//SwAhJRDgSfrcukKk1jCxuaExJ2z.baEol5838rvQQhV.',
   'abcdefghjaimelesapis'
 );
 
