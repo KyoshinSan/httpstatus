@@ -5,6 +5,7 @@
 			'login' => '/login/',
 			'logout' => '/logout/',
 			'add_url' => '/add_url/',
+			'delete_url' => '/delete_url/'
         ],
     );
 

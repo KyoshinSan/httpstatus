@@ -31,4 +31,9 @@ class url extends \InternalController
 
         return false;
     }
+
+    public function delete_url (int $id)
+    {   
+        $this->model_url->remove($id);
+    }
 }
