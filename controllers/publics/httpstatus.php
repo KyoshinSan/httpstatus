@@ -72,8 +72,9 @@ class httpstatus extends \Controller
         
     }
 
-    public function delete_url ()
+    public function delete_url ($id)
     {
+        $id = intval($id);
         $this->internal_url->delete_url($id);
         header('Location: ' . HTTP_PWD);
         return true;        

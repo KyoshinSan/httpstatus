@@ -11,7 +11,7 @@ class url extends \InternalController
         $this->model_url = new ModelUrl($pdo);
     }   
 
-    public function add_url (string $url, string $name)
+    public function add_url (string $url)
     {   
         $url_exist = $this->model_url->get_one_by_url($url);
         if(!$url_exist)

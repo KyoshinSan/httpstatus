@@ -14,7 +14,7 @@ class url extends \Model
         return $this->get('urls');
     }   
     
-   	public function create (string $url, string $name)
+   	public function create (string $url)
     {
         return $this->insert('urls', [
             'url' => $url,
