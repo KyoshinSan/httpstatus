@@ -18,7 +18,10 @@ class httpstatus extends \Controller
      */ 
     public function home()
     {   
-        return $this->render("httpstatus/home");
+        $urls = $this->internal_url->get_urls();
+        return $this->render("httpstatus/home", [
+            'urls' => $urls,
+        ]);
     }
 
     public function login()
@@ -55,15 +58,14 @@ class httpstatus extends \Controller
     public function add_url ()
     {
         $url = $_POST['url'] ?? false;
-        $name = $_POST['name'] ?? false;
 
-        if (!$url || !$name || !filter_var($url, FILTER_VALIDATE_URL))
+        if (!$url || !filter_var($url, FILTER_VALIDATE_URL))
         {
             header('Location: ' . HTTP_PWD);
             return false;
         }
 
-        $this->internal_url->add_url($url, $name);
+        $this->internal_url->add_url($url);
         header('Location: ' . HTTP_PWD);
         return true;
 

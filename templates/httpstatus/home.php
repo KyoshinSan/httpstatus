@@ -47,24 +47,28 @@
     <table class="w3-table w3-bordered">
         <tr>
           <th>État du site</th>
-          <th>Nom du site</th>
           <th>URL</th>
+        <?php if (!empty($_SESSION['user'])) { ?>
+          <th colspan="2">Actions</th>
+        <?php } ?>
         </tr>
+
+        <?php foreach ($urls as $url) { ?>
         <tr>
-          <td>Site UP</td>
-          <td>Google</td>
-          <td>https://www.google.fr/</td>
+          <td>
+            <?php if ($url['status'] == 1) { ?>
+            <span class="w3-padding w3-green w3-round-xxlarge">Site UP</span>
+            <?php } else {?>
+            <span class="w3-padding w3-red w3-round-xxlarge">Site DOWN</span>
+            <?php } ?>
+          </td>
+          <td><?= $url['url']; ?></td>
+          <?php if (!empty($_SESSION['user'])) { ?>
+          <td><a href="#">Modifier</a></td>
+          <td><a href="#">Supprimer</a></td>
+          <?php } ?>
         </tr>
-        <tr>
-          <td>Site DOWN</td>
-          <td>Facebook</td>
-          <td>https://www.facebook.com</td>
-        </tr>
-        <tr>
-          <td>Site UP</td>
-          <td>Toto</td>
-          <td>https://www.toto.fr</td>
-        </tr>
+        <?php } ?>
       </table>
   </div>
 
@@ -79,7 +83,6 @@
             <h2 class="w3-wide">Ajouter un site</h2>
             <p>Entrez les différentes informations</p>
             <form action="<?= Router::url('httpstatus', 'add_url'); ?>" method="POST" >
-                <p><input class="w3-input w3-border" type="text" placeholder="Nom" name="name" required></p>
                 <p><input class="w3-input w3-border" type="text" placeholder="URL" name="url" required></p>
                 <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom">Ajouter le site</button>
             </form>

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS urls
 (
     id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(150) NOT NULL UNIQUE,
-    name VARCHAR(150) NOT NULL,
+    status BOOLEAN NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     UNIQUE(url)
 );
@@ -35,3 +35,10 @@ INSERT INTO user
   'abcdefghjaimelesapis'
 );
 
+INSERT INTO urls
+(
+  url
+) VALUES ('https://www.google.com/'),
+ ('https://www.twitter.com/'),
+ ('https://www.ynov.com/'),
+ ('http://www.plebweb.fr/');

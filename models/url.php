@@ -7,13 +7,17 @@ class url extends \Model
     public function get_one_by_url (string $url)
     {   
         return $this->get_one('urls', ['url' => $url]);
+    }
+
+    public function get_urls ()
+    {   
+        return $this->get('urls');
     }   
     
    	public function create (string $url, string $name)
     {
         return $this->insert('urls', [
             'url' => $url,
-            'name' => $name,
         ]);
     }
 
@@ -23,7 +27,6 @@ class url extends \Model
             'urls',
             [
                 'url' => $url,
-                'name' => $name,
             ],
             [
                 'id' => $id,

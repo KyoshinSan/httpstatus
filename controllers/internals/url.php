@@ -16,7 +16,19 @@ class url extends \InternalController
         $url_exist = $this->model_url->get_one_by_url($url);
         if(!$url_exist)
         {
-            $this->model_url->create($url, $name);
+            $this->model_url->create($url);
         }
+    }
+
+    public function get_urls ()
+    {   
+        $urls_exists = $this->model_url->get_urls();
+        
+        if($urls_exists)
+        {
+            return $urls_exists;
+        }
+
+        return false;
     }
 }
