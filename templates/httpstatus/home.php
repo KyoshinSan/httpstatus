@@ -64,7 +64,7 @@
           </td>
           <td><?= $url['url']; ?></td>
           <?php if (!empty($_SESSION['user'])) { ?>
-          <td><a href="#">Modifier</a></td>
+          <td><a href="javascript:void(0)" class="w3-bar-item w3-button w3-hover-red" onclick="document.getElementById('modify').style.display='block'">Modifier</a></td>
           <td><a href="<?= Router::url('httpstatus', 'delete_url', ['id' => $url['id']]); ?>">Supprimer</a></td>
           <?php } ?>
         </tr>
@@ -85,6 +85,20 @@
             <form action="<?= Router::url('httpstatus', 'add_url'); ?>" method="POST" >
                 <p><input class="w3-input w3-border" type="text" placeholder="URL" name="url" required></p>
                 <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom">Ajouter le site</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modify" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
+            <div class="w3-container w3-white w3-center">
+            <i onclick="document.getElementById('modify').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
+            <h2 class="w3-wide">Modifier site</h2>
+            <p>Modifier les informations</p>
+            <form action="<?= Router::url('httpstatus', 'modify_url' , ['id' => $url['id']]);  ?>" method="POST" >
+                <p><input class="w3-input w3-border" type="text" placeholder="URL" name="url" required></p>
+                <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom">Modifier le site</button>
             </form>
         </div>
     </div>

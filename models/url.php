@@ -21,7 +21,7 @@ class url extends \Model
         ]);
     }
 
-    public function modify (int $id, string $url, string $name)
+    public function modify (string $url, int $id)
     {
         return $this->update(
             'urls',

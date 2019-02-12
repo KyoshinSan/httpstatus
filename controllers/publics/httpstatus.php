@@ -80,5 +80,23 @@ class httpstatus extends \Controller
         return true;        
     }
 
+    public function modify_url ($id)
+    {
+        $url = $_POST['url'] ?? false;
+        $id = intval($id);
+
+        if (!$url || !filter_var($url, FILTER_VALIDATE_URL))
+        {
+            header('Location: ' . HTTP_PWD);
+            return false;
+        }
+
+        $this->internal_url->modify_url($url, $id);
+        header('Location: ' . HTTP_PWD);
+        return true;
+
+        
+    }
+
 
 }

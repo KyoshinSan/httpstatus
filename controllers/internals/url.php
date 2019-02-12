@@ -36,4 +36,13 @@ class url extends \InternalController
     {   
         $this->model_url->remove($id);
     }
+
+    public function modify_url (string $url, int $id)
+    {   
+        $url_exist = $this->model_url->get_one_by_url($url);
+        if(!$url_exist)
+        {
+            $this->model_url->modify($url, $id);
+        }
+    }
 }
