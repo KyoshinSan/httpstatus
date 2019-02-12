@@ -64,7 +64,7 @@
           </td>
           <td><?= $url['url']; ?></td>
           <?php if (!empty($_SESSION['user'])) { ?>
-          <td><a href="javascript:void(0)" class="w3-bar-item w3-button w3-hover-red" onclick="document.getElementById('modify').style.display='block'">Modifier</a></td>
+          <td><a href="javascript:void(0)" onclick="document.getElementById('modify').style.display='block'">Modifier</a></td>
           <td><a href="<?= Router::url('httpstatus', 'delete_url', ['id' => $url['id']]); ?>">Supprimer</a></td>
           <?php } ?>
         </tr>
