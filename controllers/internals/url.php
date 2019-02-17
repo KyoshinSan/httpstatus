@@ -16,7 +16,13 @@ class url extends \InternalController
         $url_exist = $this->model_url->get_one_by_url($url);
         if(!$url_exist)
         {
-            $this->model_url->create($url);
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $output = curl_exec($ch);
+            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            $this->model_url->create($url, $httpcode, new \DateTime());
         }
     }
 
@@ -32,6 +38,17 @@ class url extends \InternalController
         return false;
     }
 
+    public function get_url (string $url)
+    {   
+        $url_exist = $this->model_url->get_one_by_url($url);
+        
+        if($url_exist)
+        {
+            return $url_exist;
+        }
+        return false;
+    }
+
     public function delete_url (int $id)
     {   
         $this->model_url->remove($id);
@@ -42,7 +59,7 @@ class url extends \InternalController
         $url_exist = $this->model_url->get_one_by_url($url);
         if(!$url_exist)
         {
-            $this->model_url->modify($url, $id);
+            $this->model_url->modify_url($url, $id);
         }
     }
 }

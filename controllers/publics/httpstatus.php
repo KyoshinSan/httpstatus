@@ -3,6 +3,7 @@ namespace controllers\publics;
 
 use \controllers\internals\user as InternalUser;
 use \controllers\internals\url as InternalUrl;
+use \controllers\internals\history as InternalHistory;
 
 class httpstatus extends \Controller
 {
@@ -12,7 +13,9 @@ class httpstatus extends \Controller
         parent::__construct($pdo);
         $this->internal_user = new InternalUser($pdo);
         $this->internal_url = new InternalUrl($pdo);
+        $this->internal_history = new InternalHistory($pdo);
     }
+
     /** 
      * Home Page
      */ 
@@ -24,6 +27,9 @@ class httpstatus extends \Controller
         ]);
     }
 
+    /** 
+     * Login function
+     */ 
     public function login()
     {
     	$email = $_POST['email'] ?? false;
@@ -48,6 +54,9 @@ class httpstatus extends \Controller
         return false;
     }
 
+    /** 
+     * Logout function
+     */ 
     public function logout()
     {
         session_destroy();
@@ -55,6 +64,9 @@ class httpstatus extends \Controller
         return true;
     }
 
+    /** 
+     * Add an url function
+     */ 
     public function add_url ()
     {
         $url = $_POST['url'] ?? false;
@@ -66,12 +78,17 @@ class httpstatus extends \Controller
         }
 
         $this->internal_url->add_url($url);
+        $id = $this->internal_url->get_url($url);
+        $this->internal_history->add_history($url, $id['id']);
         header('Location: ' . HTTP_PWD);
         return true;
 
         
     }
 
+    /** 
+     * Delete an url function
+     */ 
     public function delete_url ($id)
     {
         $id = intval($id);
@@ -80,6 +97,9 @@ class httpstatus extends \Controller
         return true;        
     }
 
+    /** 
+     * Modify an url function
+     */ 
     public function modify_url ($id)
     {
         $url = $_POST['url'] ?? false;

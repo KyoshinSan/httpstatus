@@ -19,9 +19,17 @@ CREATE TABLE IF NOT EXISTS urls
 (
     id INT NOT NULL AUTO_INCREMENT,
     url VARCHAR(150) NOT NULL UNIQUE,
-    status BOOLEAN NOT NULL DEFAULT 0,
+    last_status INT NOT NULL,
+    last_at VARCHAR(150) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE(url)
+);
+
+CREATE TABLE IF NOT EXISTS history
+(
+    id INT NOT NULL,
+    status INT NOT NULL,
+    at VARCHAR(150) NOT NULL
 );
 
 INSERT INTO user 
@@ -37,8 +45,9 @@ INSERT INTO user
 
 INSERT INTO urls
 (
-  url
-) VALUES ('https://www.google.com/'),
- ('https://www.twitter.com/'),
- ('https://www.ynov.com/'),
- ('http://www.plebweb.fr/');
+  url,
+  last_status,
+  last_at
+) VALUES ('https://www.google.com/', 200, '2019-02-17 22:59:59'),
+ ('https://www.twitter.com/', 200, '2019-02-17 22:59:59'),
+ ('https://www.ynov.com/', 200, '2019-02-17 22:59:59');

@@ -40,7 +40,7 @@
 <!-- Page content -->
 <div class="w3-content w3-padding" style="max-width:1564px">
 
-<!-- Contact Section -->
+<!-- List of websites Section -->
   <div class="w3-container w3-padding-32" id="websites">
     <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Liste des sitewebs :</h3>
     <p>Voici la liste des serveurs que nous surveillons.</p>
@@ -48,6 +48,7 @@
         <tr>
           <th>État du site</th>
           <th>URL</th>
+          <th>Dernière vérification</th>
         <?php if (!empty($_SESSION['user'])) { ?>
           <th colspan="2">Actions</th>
         <?php } ?>
@@ -56,13 +57,14 @@
         <?php foreach ($urls as $url) { ?>
         <tr>
           <td>
-            <?php if ($url['status'] == 1) { ?>
+            <?php if (1 == 1) { ?>
             <span class="w3-padding w3-green w3-round-xxlarge">Site UP</span>
             <?php } else {?>
             <span class="w3-padding w3-red w3-round-xxlarge">Site DOWN</span>
             <?php } ?>
           </td>
           <td><?= $url['url']; ?></td>
+          <td><?= $url['last_at']; ?></td>
           <?php if (!empty($_SESSION['user'])) { ?>
           <td><a href="javascript:void(0)" onclick="document.getElementById('modify').style.display='block'">Modifier</a></td>
           <td><a href="<?= Router::url('httpstatus', 'delete_url', ['id' => $url['id']]); ?>">Supprimer</a></td>
