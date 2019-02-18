@@ -57,10 +57,10 @@
         <?php foreach ($urls as $url) { ?>
         <tr>
           <td>
-            <?php if (1 == 1) { ?>
-            <span class="w3-padding w3-green w3-round-xxlarge">Site UP</span>
+            <?php if ($url['last_status'] < 400) { ?>
+            <span class="w3-padding w3-green w3-round-xxlarge">Status : <?= $url['last_status']; ?></span>
             <?php } else {?>
-            <span class="w3-padding w3-red w3-round-xxlarge">Site DOWN</span>
+            <span class="w3-padding w3-red w3-round-xxlarge">Status : <?= $url['last_status']; ?></span>
             <?php } ?>
           </td>
           <td><?= $url['url']; ?></td>

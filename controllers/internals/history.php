@@ -28,8 +28,8 @@ class history extends \Controller
 	{
 		$urls = $this->model_url->get_urls();
 
-		//while (true)
-		//{
+		while (true)
+		{
 			foreach ($urls as $key => $url) 
 			{
 				$ch = curl_init($urls[$key]['url']);
@@ -41,7 +41,23 @@ class history extends \Controller
 				$this->model_history->create($urls[$key]['id'], $httpcode ,new \DateTime());
 				$this->model_url->modify_history($urls[$key]['id'], $httpcode ,new \DateTime());
 			}
-		//}
+
+			sleep(120);
+			$urls = $this->model_url->get_urls();
+
+		}
 	}
+
+	public function gets_history ($id)
+    {   
+        $history_exist = $this->model_history->gets_history_by_id_desc($id);
+        
+        if($history_exist)
+        {
+            return $history_exist;
+        }
+
+        return false;
+    }
 
 }

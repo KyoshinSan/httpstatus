@@ -16,4 +16,11 @@ class history extends \Model
 
 	}
 
+	public function gets_history_by_id_desc (int $id)
+	{
+
+		return $this->get('history', ['id' => $id], 'at', 'desc');
+
+	}
+
 }

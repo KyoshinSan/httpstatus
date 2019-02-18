@@ -9,6 +9,11 @@ class url extends \Model
         return $this->get_one('urls', ['url' => $url]);
     }
 
+    public function get_one_by_id (string $id)
+    {   
+        return $this->get_one('urls', ['id' => $id]);
+    }
+
     public function get_urls ()
     {   
         return $this->get('urls', [], 'id', 'desc');

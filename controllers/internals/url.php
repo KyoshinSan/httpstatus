@@ -62,4 +62,16 @@ class url extends \InternalController
             $this->model_url->modify_url($url, $id);
         }
     }
+
+    public function get_url_by_id ($id)
+    {   
+        $url_exist = $this->model_url->get_one_by_id($id);
+        
+        if($url_exist)
+        {
+            return $url_exist;
+        }
+
+        return false;
+    }
 }

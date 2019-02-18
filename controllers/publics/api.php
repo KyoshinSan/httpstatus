@@ -1,7 +1,8 @@
 <?php
 namespace controllers\publics;
 
-use \controllers\internals\api as InternalApi;
+use \controllers\internals\url as InternalUrl;
+use \controllers\internals\history as InternalHistory;
 
 class api extends \Controller
 {
@@ -9,7 +10,8 @@ class api extends \Controller
 	public function __construct (\PDO $pdo)
     {
         parent::__construct($pdo);
-        $this->internal_api = new InternalApi($pdo);
+        $this->internal_url = new InternalUrl($pdo);
+        $this->internal_history = new InternalHistory($pdo);
     }
     /** 
      * Home Page
@@ -18,7 +20,7 @@ class api extends \Controller
     {   
         $datas = array(
             'version' => 1,
-            'list' => 'http://example.fr/httpstatus/api/list/',
+            'list' => \Router::url('api', 'list'),
         );
         header('Content-Type: application/json');
         echo json_encode($datas);
@@ -26,25 +28,59 @@ class api extends \Controller
 
     public function list()
     {   
-        $urls = $this->internal_api->get_urls();
+        $urls = $this->internal_url->get_urls();
+        $websites = array();
 
         foreach ($urls as $key => $url)
         {
-            $urls[$key]['delete'] = \Router::url('api', 'delete', ['id'=>$url['id']]);
-            $urls[$key]['status'] = \Router::url('api', 'status', ['id'=>$url['id']]);
-            $urls[$key]['history'] = \Router::url('api', 'history', ['id'=>$url['id']]);
+            $websites[$key]['id'] = $url['id'];
+            $websites[$key]['url'] = $url['url'];
+            $websites[$key]['delete'] = \Router::url('api', 'delete', ['id'=>$url['id']]);
+            $websites[$key]['status'] = \Router::url('api', 'status', ['id'=>$url['id']]);
+            $websites[$key]['history'] = \Router::url('api', 'history', ['id'=>$url['id']]);
         }
         $datas = array(
             'version' => 1,
-            'website' => $urls,
+            'website' => $websites,
         );
 
         header('Content-Type: application/json');
         echo json_encode($datas);
     }
 
-    
+    public function status($id)
+    {   
+        $url = $this->internal_url->get_url_by_id($id);
+        $datas = array(
+            'id' => $url['id'],
+            'url' => $url['url'],
+            'status' => ['code' => $url['last_status'], 'at' => $url['last_at']],
+        );
 
+        header('Content-Type: application/json');
+        echo json_encode($datas);
+    }
 
+    public function history($id)
+    {   
+        $url = $this->internal_url->get_url_by_id($id);
+        $history = $this->internal_history->gets_history($id);
+        $status = array();
+
+        foreach ($history as $key => $values)
+        {
+            $status[$key]['code'] = $values['status'];
+            $status[$key]['at'] = $values['at'];
+        }
+
+        $datas = array(
+            'id' => $url['id'],
+            'url' => $url['url'],
+            'status' => $status,
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode($datas);
+    }    
 
 }
