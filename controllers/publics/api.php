@@ -20,100 +20,153 @@ class api extends \Controller
      */ 
     public function api()
     {   
-        $datas = array(
-            'version' => 1,
-            'list' => \Router::url('api', 'list'),
-        );
-        header('Content-Type: application/json');
-        echo json_encode($datas);
-    }
-
-    public function list()
-    {   
-        $urls = $this->internal_url->get_urls();
-        $websites = array();
-
-        foreach ($urls as $key => $url)
-        {
-            $websites[$key]['id'] = $url['id'];
-            $websites[$key]['url'] = $url['url'];
-            $websites[$key]['delete'] = \Router::url('api', 'delete', ['id'=>$url['id']]);
-            $websites[$key]['status'] = \Router::url('api', 'status', ['id'=>$url['id']]);
-            $websites[$key]['history'] = \Router::url('api', 'history', ['id'=>$url['id']]);
-        }
-        $datas = array(
-            'version' => 1,
-            'website' => $websites,
-        );
-
-        header('Content-Type: application/json');
-        echo json_encode($datas);
-    }
-
-    public function status($id)
-    {   
-        $url = $this->internal_url->get_url_by_id($id);
-        $datas = array(
-            'id' => $url['id'],
-            'url' => $url['url'],
-            'status' => ['code' => $url['last_status'], 'at' => $url['last_at']],
-        );
-
-        header('Content-Type: application/json');
-        echo json_encode($datas);
-    }
-
-    public function history($id)
-    {   
-        $url = $this->internal_url->get_url_by_id($id);
-        $history = $this->internal_history->gets_history($id);
-        $status = array();
-
-        foreach ($history as $key => $values)
-        {
-            $status[$key]['code'] = $values['status'];
-            $status[$key]['at'] = $values['at'];
-        }
-
-        $datas = array(
-            'id' => $url['id'],
-            'url' => $url['url'],
-            'status' => $status,
-        );
-
-        header('Content-Type: application/json');
-        echo json_encode($datas);
-    }    
-
-    public function add ()
-    {   
-        $url = $_POST['url'] ?? false;
         $api_key = $_GET['api_key'] ?? false;
 
         $user = $this->internal_user->check_api_key($api_key);
 
-        if (!$url || !filter_var($url, FILTER_VALIDATE_URL) || !$user)
+        if ($user)
         {
             $datas = array(
-                'success' => false,
+                'version' => 1,
+                'list' => \Router::url('api', 'list'),
+            );
+            header('Content-Type: application/json');
+            echo json_encode($datas);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function list()
+    {   
+        $api_key = $_GET['api_key'] ?? false;
+
+        $user = $this->internal_user->check_api_key($api_key);
+
+        if ($user)
+        {
+            $urls = $this->internal_url->get_urls();
+            $websites = array();
+
+            foreach ($urls as $key => $url)
+            {
+                $websites[$key]['id'] = $url['id'];
+                $websites[$key]['url'] = $url['url'];
+                $websites[$key]['delete'] = \Router::url('api', 'delete', ['id'=>$url['id']]);
+                $websites[$key]['status'] = \Router::url('api', 'status', ['id'=>$url['id']]);
+                $websites[$key]['history'] = \Router::url('api', 'history', ['id'=>$url['id']]);
+            }
+            $datas = array(
+                'version' => 1,
+                'website' => $websites,
             );
 
             header('Content-Type: application/json');
             echo json_encode($datas);
-            return false;
+
+            return true;
         }
 
-        $id = $this->internal_url->get_url($url);
+        return false;
+    }
 
-        $datas = array(
-            'success' => true,
-            'id' => $id['id'],
-        );
+    public function status($id)
+    {   
+        $api_key = $_GET['api_key'] ?? false;
 
-        header('Content-Type: application/json');
-        echo json_encode($datas);
+        $user = $this->internal_user->check_api_key($api_key);
 
-        return true;
+        if ($user)
+        {
+            $url = $this->internal_url->get_url_by_id($id);
+            $datas = array(
+                'id' => $url['id'],
+                'url' => $url['url'],
+                'status' => ['code' => $url['last_status'], 'at' => $url['last_at']],
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($datas);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function history($id)
+    {   
+        $api_key = $_GET['api_key'] ?? false;
+
+        $user = $this->internal_user->check_api_key($api_key);
+
+        if ($user)
+        {
+            $url = $this->internal_url->get_url_by_id($id);
+            $history = $this->internal_history->gets_history($id);
+            $status = array();
+
+            foreach ($history as $key => $values)
+            {
+                $status[$key]['code'] = $values['status'];
+                $status[$key]['at'] = $values['at'];
+            }
+
+            $datas = array(
+                'id' => $url['id'],
+                'url' => $url['url'],
+                'status' => $status,
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($datas);
+
+            return true;
+        }
+
+        return false;
+    }    
+
+    public function add ()
+    {   
+        $api_key = $_GET['api_key'] ?? false;
+        $user = $this->internal_user->check_api_key($api_key);
+        
+        $url = $_POST['url'] ?? false;
+
+        if ($user)
+        {
+
+            if (!$url || !filter_var($url, FILTER_VALIDATE_URL))
+            {
+                $datas = array(
+                    'success' => false,
+                );
+
+                header('Content-Type: application/json');
+                echo json_encode($datas);
+                return false;
+            }
+
+            $this->internal_url->add_url($url);
+            $id = $this->internal_url->get_url($url);
+            $this->internal_history->add_history($url, $id['id']);
+
+            $datas = array(
+                'success' => true,
+                'id' => $id['id'],
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($datas);
+
+            return true;
+        }
+
+        return false;
+
     } 
 
 }
