@@ -133,7 +133,7 @@ class api extends \Controller
     {   
         $api_key = $_GET['api_key'] ?? false;
         $user = $this->internal_user->check_api_key($api_key);
-        
+
         $url = $_POST['url'] ?? false;
 
         if ($user)
@@ -168,5 +168,36 @@ class api extends \Controller
         return false;
 
     } 
+
+    public function delete ($id)
+    {   
+        $api_key = $_GET['api_key'] ?? false;
+        $user = $this->internal_user->check_api_key($api_key);
+
+        if ($user)
+        {
+            $id = intval($id);
+            $this->internal_url->delete_url($id);
+            $datas = array(
+                'success' => true,
+                'id' => $id['id'],
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($datas);
+
+            return true;
+        }
+
+        $datas = array(
+            'success' => false,
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode($datas);
+        
+        return false;
+
+    }
 
 }
