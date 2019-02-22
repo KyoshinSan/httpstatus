@@ -25,6 +25,7 @@ class httpstatus extends \Controller
         $history = $this->internal_history->gets_histories();
         return $this->render("httpstatus/home", [
             'urls' => $urls,
+            'history' => $history,
         ]);
     }
 

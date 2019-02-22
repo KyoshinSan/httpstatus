@@ -64,7 +64,7 @@
             <?php } ?>
           </td>
           <td><?= $url['url']; ?></td>
-          <td><?= $url['last_at']; ?></td>
+          <td><a href="javascript:void(0)" onclick="document.getElementById('history_id_<?= $url['id']; ?>').style.display='block'"><?= $url['last_at']; ?></a></td>
           <?php if (!empty($_SESSION['user'])) { ?>
           <td><a href="javascript:void(0)" onclick="document.getElementById('modify_id_<?= $url['id']; ?>').style.display='block'">Modifier</a></td>
           <td><a href="<?= Router::url('httpstatus', 'delete_url', ['id' => $url['id']]); ?>">Supprimer</a></td>
@@ -92,7 +92,6 @@
     </div>
 </div>
 
-
 <?php foreach ($urls as $url) { ?>
 <div id="modify_id_<?= $url['id']; ?>" class="w3-modal">
     <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
@@ -104,6 +103,37 @@
                 <p><input class="w3-input w3-border" type="text" placeholder="URL" name="url" required></p>
                 <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom">Modifier le site</button>
             </form>
+        </div>
+    </div>
+</div>
+<?php } ?>
+
+<?php foreach ($urls as $url) { ?>
+<div id="history_id_<?= $url['id']; ?>" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
+        <div class="w3-container w3-white w3-center">
+            <i onclick="document.getElementById('history_id_<?= $url['id']; ?>').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
+            <h2 class="w3-wide">Dernière vérification</h2>
+            <table class="w3-table w3-bordered">
+        		<tr>
+          			<th>État du site</th>
+          			<th>Dernière vérification</th>
+        		</tr>
+        		<?php foreach ($history as $key => $value) { ?>
+        		<?php if ($history[$key]['id'] == $url['id']) { ?>
+        		<tr>
+          			<td>
+            		<?php if ($history[$key]['status'] < 400) { ?>
+            		<span class="w3-padding w3-green w3-round-xxlarge">Status : <?= $history[$key]['status']; ?></span>
+            		<?php } else {?>
+            		<span class="w3-padding w3-red w3-round-xxlarge">Status : <?= $history[$key]['status']; ?></span>
+            		<?php } ?>
+          			</td>
+          			<td><?= $history[$key]['at']; ?></td>
+          		</tr>
+          		<?php } ?>
+          		<?php } ?>
+          	</table>
         </div>
     </div>
 </div>
