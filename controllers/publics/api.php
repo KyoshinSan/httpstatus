@@ -180,7 +180,6 @@ class api extends \Controller
             $this->internal_url->delete_url($id);
             $datas = array(
                 'success' => true,
-                'id' => $id['id'],
             );
 
             header('Content-Type: application/json');
