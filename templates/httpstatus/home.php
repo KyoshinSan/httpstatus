@@ -66,7 +66,7 @@
           <td><?= $url['url']; ?></td>
           <td><?= $url['last_at']; ?></td>
           <?php if (!empty($_SESSION['user'])) { ?>
-          <td><a href="javascript:void(0)" onclick="document.getElementById('modify').style.display='block'">Modifier</a></td>
+          <td><a href="javascript:void(0)" onclick="document.getElementById('modify_id_<?= $url['id']; ?>').style.display='block'">Modifier</a></td>
           <td><a href="<?= Router::url('httpstatus', 'delete_url', ['id' => $url['id']]); ?>">Supprimer</a></td>
           <?php } ?>
         </tr>
@@ -92,10 +92,12 @@
     </div>
 </div>
 
-<div id="modify" class="w3-modal">
+
+<?php foreach ($urls as $url) { ?>
+<div id="modify_id_<?= $url['id']; ?>" class="w3-modal">
     <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
             <div class="w3-container w3-white w3-center">
-            <i onclick="document.getElementById('modify').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
+            <i onclick="document.getElementById('modify_id_<?= $url['id']; ?>').style.display='none'" class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
             <h2 class="w3-wide">Modifier site</h2>
             <p>Modifier les informations</p>
             <form action="<?= Router::url('httpstatus', 'modify_url' , ['id' => $url['id']]);  ?>" method="POST" >
@@ -105,5 +107,6 @@
         </div>
     </div>
 </div>
+<?php } ?>
 
 <?php include(PWD_TEMPLATES . '/incs/footer.php'); ?>
