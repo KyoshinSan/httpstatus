@@ -22,4 +22,16 @@ class user extends \InternalController
 
         return false;
     }
+
+    public function check_api_key (string $api_key)
+    {   
+        $user = $this->model_user->get_one_by_api_key($api_key);
+        $user_exist = password_verify($api_key, $user['api_key']);
+        if($user_exist)
+        {
+            return $user;
+        }
+
+        return false;
+    }
 }

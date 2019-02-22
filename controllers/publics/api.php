@@ -1,6 +1,7 @@
 <?php
 namespace controllers\publics;
 
+use \controllers\internals\user as InternalUser;
 use \controllers\internals\url as InternalUrl;
 use \controllers\internals\history as InternalHistory;
 
@@ -10,6 +11,7 @@ class api extends \Controller
 	public function __construct (\PDO $pdo)
     {
         parent::__construct($pdo);
+        $this->internal_user = new InternalUser($pdo);
         $this->internal_url = new InternalUrl($pdo);
         $this->internal_history = new InternalHistory($pdo);
     }
@@ -82,5 +84,36 @@ class api extends \Controller
         header('Content-Type: application/json');
         echo json_encode($datas);
     }    
+
+    public function add ()
+    {   
+        $url = $_POST['url'] ?? false;
+        $api_key = $_GET['api_key'] ?? false;
+
+        $user = $this->internal_user->check_api_key($api_key);
+
+        if (!$url || !filter_var($url, FILTER_VALIDATE_URL) || !$user)
+        {
+            $datas = array(
+                'success' => false,
+            );
+
+            header('Content-Type: application/json');
+            echo json_encode($datas);
+            return false;
+        }
+
+        $id = $this->internal_url->get_url($url);
+
+        $datas = array(
+            'success' => true,
+            'id' => $id['id'],
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode($datas);
+
+        return true;
+    } 
 
 }
