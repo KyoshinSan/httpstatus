@@ -60,4 +60,16 @@ class history extends \Controller
         return false;
     }
 
+    public function gets_histories ()
+    {   
+        $histories_exists = $this->model_history->gets_histories();
+        
+        if($histories_exists)
+        {
+            return $histories_exists;
+        }
+
+        return false;
+    }
+
 }

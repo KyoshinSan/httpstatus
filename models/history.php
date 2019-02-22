@@ -23,4 +23,11 @@ class history extends \Model
 
 	}
 
+	public function gets_histories ()
+	{
+
+		return $this->get('history');
+
+	}
+
 }
