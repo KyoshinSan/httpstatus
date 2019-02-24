@@ -1,12 +1,12 @@
 # Projet PHP Monitoring Website (Httpstatus)
 
-**Auteur :** DINH Jonathan & HERNANDEZ Theo
-**Date :** 24/02/2019
+**Auteur :** DINH Jonathan & HERNANDEZ Theo<br />
+**Date :** 24/02/2019<br />
 **Sujet :** Faire un site de monitoring en PHP avec le framework Descartes
 
 ## Installation du projet
 
-**Pré-requis :** Apache2, MariaDB, PHP, php-mysql, php-xml, php-curl, Composer, Supervisor
+**Pré-requis :** Apache2, MariaDB, PHP, php-mysql, php-xml, php-curl, Composer, Supervisor <br />
 **/!\ Attention /!\\** Utilisez un Apache2 configuré pour lire dans /var/www/html avec les .htaccess activés et le module rewrite activé.
 
 	$ cd /var/www/html
